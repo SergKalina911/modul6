@@ -401,4 +401,112 @@ p = Person("Boris", 34, True)
 print(p.name, p.age, p.is_active())
 print(p.greeting())
 """ Ми додали метод is_active, щоб отримати доступ для читання захищеного атрибута _is_active та метод set_active 
-для зміни значення захищеного атрибута _is_active """
+для зміни значення захищеного атрибута _is_active 
+
+                        Приватні (Private) атрибути та методи
+
+    В Python не існує справжньої приватності для атрибутів класів, як це реалізовано, наприклад, у Java. Python 
+використовує так зване "перетворення імен" для забезпечення цього рівня інкапсуляції. Атрибути, що вважаються 
+приватними позначаються двома підкресленнями __ і не можуть бути доступні безпосередньо ззовні класу."""
+
+class Person:
+    def __init__(self, name: str, age: int, is_active: bool, is_admin: bool):
+        self.name = name
+        self.age = age
+        self._is_active = is_active
+        self.__is_admin = is_admin
+
+    def greeting(self):
+        return f"Hi {self.name}"
+
+    def is_active(self):
+        return self._is_active
+
+    def set_active(self, active: bool):
+        self._is_active = active
+
+p = Person("Boris", 34, True, False)
+print(p.__is_admin)
+
+""" Виведення:
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+Cell In[6], line 13
+      9         return f"Hi {self.name}"
+     12 p = Person("Boris", 34, True, False)
+---> 13 print(p.__is_admin)
+
+AttributeError: 'Person' object has no attribute '__is_admin'
+
+    Як видно з цього прикладу, доступу за допомогою p.__is_admin немає.
+    Насправді було лише змінене ім'я поля, щоб запобігти випадковому доступу до нього, але воно все одно доступно
+ззовні класу. Змінене ім'я формується як знак підкреслювання, ім'я класу та ім'я змінної. """
+
+class Person:
+    def __init__(self, name: str, age: int, is_active: bool, is_admin: bool):
+        self.name = name
+        self.age = age
+        self._is_active = is_active
+        self.__is_admin = is_admin
+
+    def greeting(self):
+        return f"Hi {self.name}"
+
+    def is_active(self):
+        return self._is_active
+
+    def set_active(self, active: bool):
+        self._is_active = active
+
+p = Person("Boris", 34, True, False)
+print(p._Person__is_admin)
+# Виведення:False
+
+""" Тож можна, за бажанням, отримати доступ до поля __is_admin через вираз p._Person__is_admin, що загалом нічого не захищає.
+Щоб реалізувати методи доступу до приватного поля __is_admin у класі Person, ми можемо використати той самий підхід,
+що і до захищеного поля _is_active
+"""
+class Person:
+    def __init__(self, name: str, age: int, is_active: bool, is_admin: bool):
+        self.name = name
+        self.age = age
+        self._is_active = is_active
+        self.__is_admin = is_admin
+
+    def greeting(self):
+        return f"Hi {self.name}"
+
+    def is_active(self):
+        return self._is_active
+
+    def set_active(self, active: bool):
+        self._is_active = active
+
+    def get_is_admin(self):
+        return self.__is_admin
+
+    def set_is_admin(self, is_admin: bool):
+        # Тут можна додати будь-яку логіку перевірки або обробки
+        self.__is_admin = is_admin
+
+        
+p = Person("Boris", 34, True, False)
+print(p.get_is_admin())
+p.set_is_admin(True)
+print(p.get_is_admin())
+
+""" Виведення:
+
+False
+True
+
+    У цьому прикладі, метод get_is_admin дозволяє отримати значення поля __is_admin, а метод set_is_admin дозволяє 
+його змінити. Це забезпечує контрольований доступ до приватного поля, дозволяючи внести необхідну логіку перевірки 
+або обробки при зміні значення.
+
+    Як бачимо багато аспектів інкапсуляції в Python базуються на конвенціях, а не на строгих правилах мови. Через 
+відкритий характер Python, дуже легко обійти інкапсуляцію, отримуючи доступ до "захищених" або "приватних" атрибутів 
+класу ззовні. Це може призвести до порушення інтегральності даних або неочікуваної поведінки об'єктів.
+
+    Ефективна інкапсуляція в Python значною мірою залежить від дисципліни та узгодженості розробників. Оскільки багато 
+обмежень доступу є лише конвенціями, то строге дотримання цих конвенцій є важливим для підтримки інкапсуляції. """
