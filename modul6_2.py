@@ -543,9 +543,10 @@ class Cat(Owner):
 
     def cat_info(self):
         return f"Cat Name: {self.nickname}, Age: {self.age}"
+    
 
-	def sound(self):
-		        return "Meow"
+    def sound(self):
+        return "Meow"
 
 cat = Cat('Simon', 4, 'Boris', '+380503002010')
 print(cat.info())

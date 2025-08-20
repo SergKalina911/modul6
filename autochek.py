@@ -152,4 +152,33 @@ class LookUpKeyDict(UserDict):
 data = LookUpKeyDict({'a': 1, 'b': 2, 'c': 1})
 print(data.lookup_key(1))  # Output: ['a', 'c']
 
-        
+""" Перепишем задачу расчета задолженности по коммунальным услугам с использованием UserListкласса.
+
+payment = [1, -3, 4]
+
+
+def amount_payment(payment):
+    sum = 0
+    for value in payment:
+        if value > 0:
+            sum = sum + value
+    return sum
+    
+    Давайте вспомним условие. У нас есть список показаний задолженности по коммунальным услугам на конец месяца. 
+Это paymentсписок. Долг может быть отрицательным, если у нас есть переплата, или положительным, если нам нужно 
+оплатить счета.
+
+    Создайте AmountPaymentListкласс, наследующий UserListкласс. Сделайте amount_paymentфункцию методом класса 
+AmountPaymentList. """ 
+from collections import UserList
+class AmountPaymentList(UserList):
+    def amount_payment(self):
+        total = 0
+        for value in self.data:
+            if value > 0:
+                total += value
+        return total
+# Example usage
+payment = AmountPaymentList([1, -3, 4])
+print(payment.amount_payment())  # Output: 5
+       
