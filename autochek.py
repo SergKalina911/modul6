@@ -218,4 +218,102 @@ try:
     updated_list = add_id(id_list, "12345")  # This will raise IDException
 except IDException as e:
     print(e)
-       
+""" Утиная типизация — это механизм в Python, позволяющий использовать любой объект вместо другого, если 
+у обоих есть необходимые методы и поля. Такая типизация называется утиной типизацией из-за поговорки: 
+«Если что-то крякает как утка, плавает как утка и летает как утка, то это утка». Это отражает суть подхода, 
+реализованного в Python. Нет, интерпретатор не проверяет, что объект требуемого или дочернего класса 
+передан функции или методу. Достаточно, чтобы объект имел необходимые методы, и всё будет работать.
+
+class Mammal:
+    phrase = ''
+
+    def voice(self):
+        return self.phrase
+
+
+class Dog(Mammal):
+    phrase = 'Bark!'
+
+
+class Cat(Mammal):
+    phrase = 'Meow!'
+
+
+class Chupakabra:
+    def voice(self):
+        return 'Whooooo!!!'
+
+
+class Recorder:
+    def record_animal(self, animal):
+        voice = animal.voice()
+        print(f'Recorded "{voice}"')
+
+
+r = Recorder()
+cat = Cat()
+dog = Dog()
+strange_animal = Chupakabra()
+
+r.record_animal(cat)  # Recorded "Meow!"
+r.record_animal(dog)  # Recorded "Bark!"
+r.record_animal(strange_animal)  # Recorded "Whooooo!!!"
+
+    В этом примере мы создали родительский класс Mammal, содержащий voiceметод и два дочерних класса 
+Dog: Cat. RecordКласс принимает animalобъект в качестве входных данных для record_animalметода и вызывает 
+voice метод для вывода результата voiceвыполнения на консоль. В то же время существует Chupakabraкласс , 
+который также имеет voiceметод , хотя он и не унаследован от Mammal. Однако объекты этого класса также 
+могут быть переданы в record_animal. Главное, чтобы атрибут имел такое же имя и принимал те же аргументы 
+(если это метод).
+
+    Суть утиной типизации заключается не в том, чтобы заботиться о точном классе объекта, а в том, какие 
+методы для него можно вызывать и какие операции можно над ним выполнять. Таким образом, вам просто нужно 
+передать объект методу, зная, что при его неправильном использовании будет сгенерировано исключение. 
+
+    Как мы уже упоминали, полиморфизм — это способность программы выбирать различные реализации при вызове 
+операций с одним и тем же именем.
+
+    Однако полиморфизм — это также способность объектов притворяться чем-то другим. В приведённом выше 
+примере Chupakabra притворялись собакой и кошкой.
+
+    Вам необходимо реализовать CatDogкласс без использования наследования от Animalкласса, но так, чтобы 
+экземпляр класса CatDogвёл себя так же, как экземпляр класса Cat. Это означает, что он должен выдавать 
+себя за Catкласс."""
+class Animal:
+    def __init__(self, nickname, weight):
+        self.nickname = nickname
+        self.weight = weight
+
+    def say(self):
+        pass
+
+    def change_weight(self, weight):
+        self.weight = weight
+
+
+class Cat(Animal):
+    def say(self):
+        return "Meow"
+
+
+class CatDog:
+    def __init__(self, nickname, weight):
+        self.nickname = nickname
+        self.weight = weight
+
+    def say(self):
+        return "Meow"
+
+    def change_weight(self, weight):
+        self.weight = weight
+# Example usage
+cat = Cat("Whiskers", 10)
+cat_dog = CatDog("Fido", 15)
+print(cat.say())  # Output: Meow
+print(cat_dog.say())  # Output: Meow
+print(cat.nickname)  # Output: Whiskers
+print(cat_dog.nickname)  # Output: Fido
+print(cat.weight)  # Output: 10
+print(cat_dog.weight)  # Output: 15
+cat_dog.change_weight(20)
+print(cat_dog.weight)  # Output: 20
