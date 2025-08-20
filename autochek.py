@@ -181,4 +181,41 @@ class AmountPaymentList(UserList):
 # Example usage
 payment = AmountPaymentList([1, -3, 4])
 print(payment.amount_payment())  # Output: 5
+
+""" Создайте NumberStringкласс, унаследуйте его от UserStringкласса и определите number_count(self)для него метод. 
+Этот метод будет подсчитывать количество цифр в строке. """
+from collections import UserString
+class NumberString(UserString):
+    def number_count(self):
+        count = 0
+        for char in self.data:
+            if char.isdigit():
+                count += 1
+        return count
+# Example usage
+number_string = NumberString("Hello123")
+print(number_string.number_count())  # Output: 3 (since there are three digits: 1, 2, and 3)
+
+""" Создайте IDExceptionкласс, который будет наследовать Exceptionкласс.
+
+    Также реализуйте add_id(id_list, employee_id)функцию, которая добавляет идентификатор пользователя employee_id к 
+id_list и возвращает указанный обновленный id_list.
+
+    Функция add_idвызовет свою собственную, IDExceptionесли employee_id не начинается с 01, в противном случае 
+employee_idбудет добавлена к id_list. """
+class IDException(Exception):
+    pass
+def add_id(id_list, employee_id):
+    if not employee_id.startswith("01"):
+        raise IDException(f"Invalid employee ID: {employee_id}. It must start with '01'.")
+    id_list.append(employee_id)
+    return id_list
+# Example usage
+id_list = []
+try:
+    updated_list = add_id(id_list, "01234")
+    print(updated_list)  # Output: ['01234']
+    updated_list = add_id(id_list, "12345")  # This will raise IDException
+except IDException as e:
+    print(e)
        
