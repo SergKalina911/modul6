@@ -373,4 +373,49 @@ contacts_manager3.add_contacts("Serg Kalina", "(095) 456-7890", "Serg_Doe@Kalina
 print(contacts_manager.list_contacts())
 print(contacts_manager2.list_contacts())
 print(contacts_manager3.list_contacts())
-  
+
+""" Продолжаем расширять функциональность класса Contacts. На этом этапе добавим get_contact_by_id в класс 
+метод. Метод должен искать контакт по уникальному идентификатору в contacts списке и возвращать словарь с 
+указанным ключом идентификатора. Если словарь с указанным идентификатором не найден в списке контактов, 
+метод возвращает None.
+
+ПРИМЕЧАНИЕ : Не создавайте экземпляр класса, который правильно пройдет тест. """ 
+class Contacts:
+    current_id = 1
+    
+    def __init__(self):
+        self.contacts = []
+
+    def list_contacts(self):
+        return self.contacts
+
+    def add_contacts(self, name, phone, email, favorite):
+        self.contacts.append(
+            {
+                "id": Contacts.current_id,
+                "name": name,
+                "phone": phone,
+                "email": email,
+                "favorite": favorite,
+            }
+        )
+        Contacts.current_id += 1
+
+    def get_contact_by_id(self, id):
+        for contact in self.contacts:
+            if contact["id"] == id:
+                return contact
+        return None
+# Example usage
+contacts_manager = Contacts()
+contacts_manager2 = Contacts()
+contacts_manager3 = Contacts()
+
+contacts_manager.add_contacts("Wylie Pope", "(692) 802-2949", "wpop@gmail.com", True)
+contacts_manager2.add_contacts("John Doe", "(123) 456-7890", "John_Doe@gmail.com", False)
+contacts_manager3.add_contacts("Serg Kalina", "(095) 456-7890", "Serg_Doe@Kalina.com", False)
+print(contacts_manager.get_contact_by_id(1)) 
+print(contacts_manager2.get_contact_by_id(1)) 
+print(contacts_manager3.get_contact_by_id(3))
+
+    
