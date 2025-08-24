@@ -317,3 +317,60 @@ print(cat.weight)  # Output: 10
 print(cat_dog.weight)  # Output: 15
 cat_dog.change_weight(20)
 print(cat_dog.weight)  # Output: 20
+
+""" Реализуем Contactsкласс, работающий с контактами. На первом этапе добавим два метода.
+
+A list_contacts возвращает список контактов — переменную contactsиз текущего экземпляра класса.
+Добавляет add_contactsв список новый контакт, который является переменной объекта - contacts.
+Класс Contacts содержит current_id переменную класса. Мы будем использовать её при добавлении нового 
+контакта в качестве уникального идентификатора контакта. При добавлении нового контакта мы передаём 
+методу следующие аргументы add_contacts: name, phone, email, и favorite. Метод должен создать словарь 
+с указанными ключами и значениями параметров функции. Также необходимо добавить в словарь новый ключ 
+идентификатора, значение которого будет значением current_id переменной класса.
+
+Пример полученного словаря:
+
+    {
+    "id": 1,
+    "name": "Wylie Pope",
+    "phone": "(692) 802-2949",
+    "email": "est@utquamvel.net",
+    "favorite": True,
+}
+Добавляем указанный словарь в contacts список. Не забудьте увеличивать current_id переменную на единицу 
+после каждого вызова метода add_contacts, чтобы ключ-идентификатор оставался уникальным для словаря.
+
+ПРИМЕЧАНИЕ : Не создавайте экземпляр класса в коде, чтобы правильно пройти тест. """
+class Contacts:
+    current_id = 1
+
+    def __init__(self):
+        self.contacts = []
+        
+
+    def list_contacts(self):
+        return self.contacts
+        
+
+    def add_contacts(self, name, phone, email, favorite):
+        contact = {
+            "id": Contacts.current_id,
+            "name": name,
+            "phone": phone,
+            "email": email,
+            "favorite": favorite
+        }
+        self.contacts.append(contact)
+        Contacts.current_id += 1
+# Example usage
+contacts_manager = Contacts()
+contacts_manager2 = Contacts()
+contacts_manager3 = Contacts()
+
+contacts_manager.add_contacts("Wylie Pope", "(692) 802-2949", "wpop@gmail.com", True)
+contacts_manager2.add_contacts("John Doe", "(123) 456-7890", "John_Doe@gmail.com", False)
+contacts_manager3.add_contacts("Serg Kalina", "(095) 456-7890", "Serg_Doe@Kalina.com", False)
+print(contacts_manager.list_contacts())
+print(contacts_manager2.list_contacts())
+print(contacts_manager3.list_contacts())
+  
